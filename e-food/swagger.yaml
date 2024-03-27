@@ -1,0 +1,60 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: E-Food
+schemes: [http]
+host: e-food.com
+basePath: /v1
+consumes: [application/json]
+produces: [application/json]
+paths:
+  /categories:
+    get:
+      tags: [menu]
+      summary: 'Get menu items for the app'
+      description: 'It returns a list of nested objects which contains all categories and sub-categories required to create menu'
+      operationId: CategoryList
+      responses:
+        200:
+          description: 'List of Categories'
+          schema:
+            $ref: '#/definitions/Categories'
+        400:
+          description: Bad Request
+        404:
+          description: Categories Not Found
+        500:
+          schema:
+            type: string
+          description: Server Error
+definitions:
+  Categories:
+    type: array
+    items:
+      $ref: '#/definitions/Category'
+  Category:
+    type: object
+    properties:
+      bcId:
+        type: integer
+      bcName:
+        type: string
+      bcImageUrl:
+        type: string
+      bcIsActive:
+        type: boolean
+      subCategories:
+        type: array
+        items:
+          $ref: '#/definitions/SubCategory'
+  SubCategory:
+    type: object
+    properties:
+      scId:
+        type: integer
+      scName:
+        type: string
+      scImageUrl:
+        type: string
+      scIsActive:
+        type: boolean
